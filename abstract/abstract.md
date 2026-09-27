@@ -1,0 +1,19 @@
+Baseball2Vector: Interpretable Five-Tool Profiles with Predictive Utility
+
+Introduction
+Player evaluation offers dozens of overlapping measures or single-number summaries such as wRC+ and WAR that summarize performance but obscure skill differences. Baseball2Vector (B2V) organizes 22 public statistics into five tools—Power, Contact, Plate Discipline, Defense, and Speed—on the 20–80 scouting scale. To connect player description with predictive use, we ask (1) whether B2V distinguishes hitters with similar WAR and wRC+, (2) whether it improves next-season prediction over simpler summaries, (3) how much predictive accuracy it sacrifices versus all inputs, (4) how it compares with alternative five-dimensional representations, and (5) whether it improves history-based projections.
+
+Methods
+FanGraphs data from 2019–2025 yielded 3,070 hitter-seasons with ≥100 plate appearances (PA). B2V shrinks inputs by PA, standardizes and orients them within season, averages equally within tools, and restandardizes within each season’s ≥100-PA cohort to 50 + 10z, clipped to 20–80. (1) Diversity analysis used 1,777 focal seasons from 626 hitters with next-season data and one nearest same-season match within 0.2 WAR and five wRC+ points, allowing comparator reuse. Standardized root-mean-square distances compared matches, each hitter's next season, and same-season, PA-stratified random counterparts. Five expanding-window forecasts evaluated 1,706 adjacent-season transitions. Ridge predicted next-season wRC+ (primary) and WAR per 600 PA (WAR/600; secondary).
+
+Comparators were (2) calibrated current performance and fixed representatives (ISO, Contact%, BB%, BsR, Def) (3) all 22 inputs (4) principal component analysis (PCA), with one component per tool or five unrestricted components and (5) recalibrated Marcel-style (history-based) projections, alone or supplemented with B2V, representatives, or all inputs. Sensitivity analysis selected among the fixed and 17 within-tool single-replacement representative sets using training-only cross-validation. Model fitting used training folds only. Paired player-cluster bootstrap (2,000 resamples) gave 95% confidence intervals (CIs). Analyses also excluded 2020-related transitions and ablated Defense and Speed jointly beyond offense.
+
+Results
+Matched-pair median distance was 1.07, versus 0.73 for same-hitter pairs and 1.26 for random pairs: 15.1% below the random-pair median (95% CI, 12.6–17.5%), with a matched–same-hitter median difference of 0.33 (0.30–0.36).
+
+For wRC+, B2V reduced mean absolute error (MAE) by 0.92 (0.58–1.26) versus current performance, 0.75 (0.45–1.06) versus fixed representatives, and 0.66 (0.39–0.92) versus training-selected representatives. All three comparisons favored B2V in every forecast year. Relative to all inputs (MAE, 18.82), B2V increased MAE by 0.24 (0.05–0.43; ≈1.3%). Both PCA comparisons were inconclusive.
+
+Adding B2V to history-based projections reduced MAE by 0.37 (0.17–0.57), although adding training-selected representatives instead yielded 0.24 (0.06–0.43) lower MAE. This difference was inconclusive without 2020-related transitions. Adding Defense and Speed jointly beyond offense reduced WAR/600 MAE by 0.121 (0.086–0.155), improving every forecast year; the wRC+ difference was inconclusive.
+
+Conclusion
+B2V distinguishes similarly valued hitters and improves next-season wRC+ prediction over simpler summaries, with ≈1.3% higher MAE than all 22 inputs and no clear difference from PCA. It also improves history-based projections, though training-selected representatives improve them more in the full sample. Defense and Speed jointly improve WAR/600 prediction beyond offense. Findings cover hitters with ≥100 PA in consecutive seasons; scouting-grade validity remains untested. Input contributions are additively traceable before clipping.

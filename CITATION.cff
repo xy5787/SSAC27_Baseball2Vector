@@ -1,0 +1,8 @@
+cff-version: 1.2.0
+message: "If you use Baseball2Vector, please cite this SSAC 2027 submission software."
+title: "Baseball2Vector: SSAC 2027 Submission Software"
+type: software
+authors:
+  - family-names: Choi
+    given-names: Jaeseok
+year: 2026

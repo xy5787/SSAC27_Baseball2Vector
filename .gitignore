@@ -1,0 +1,13 @@
+# Locally supplied or generated row-level data must never be committed.
+data/raw/
+data/processed/
+results_sd10/
+__pycache__/
+.pytest_cache/
+*.py[cod]
+.venv/
+.env
+# Rebuild previews / generated provenance, not part of the small release.
+abstract/**/*.png
+abstract/**/*.svg
+abstract/submission_assets_manifest.json

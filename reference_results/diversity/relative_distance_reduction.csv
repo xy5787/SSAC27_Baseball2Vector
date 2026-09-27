@@ -1,0 +1,2 @@
+estimate,ci_low,ci_high,n_boot,definition,bootstrap_unit,interpretation
+0.15055891921124231,0.1259941767916083,0.17484553523539673,2000,1 - matched median / random median,focal stable player ID; joint resamples across groups,"relative difference of medians, not median of pairwise ratios or causal removal"
