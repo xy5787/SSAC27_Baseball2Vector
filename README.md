@@ -8,7 +8,6 @@ This is a standalone submission snapshot. All required project code is included 
 
 ## Contents
 
-- `abstract/`: submission text, Figure 1 (PDF), and Table 1 (PDF/CSV/Markdown).
 - `scripts/`, `src/`: input preparation, prediction comparisons, sensitivity analyses, diversity analysis, and artifact generation.
 - `data/`: acquisition recipe, schema, and frozen-snapshot checks; no observations.
 - `protocols/`: analysis specifications.
