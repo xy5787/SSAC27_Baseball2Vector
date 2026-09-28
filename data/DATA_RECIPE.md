@@ -1,6 +1,6 @@
 # FanGraphs data recipe
 
-This recipe accompanies the SSAC 2027 Baseball2Vector analysis. Obtain the inputs independently from [FanGraphs MLB batting leaderboards](https://www.fangraphs.com/leaders/major-league) through its [member export interface](https://blogs.fangraphs.com/contact/). No FanGraphs rows are distributed here.
+This recipe accompanies the SSAC 2027 Baseball2Vector analysis. Obtain the inputs independently from [FanGraphs MLB batting leaderboards](https://www.fangraphs.com/leaders/major-league) through its member export interface. No FanGraphs rows are distributed here.
 
 ## Acquire
 
