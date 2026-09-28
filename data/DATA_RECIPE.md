@@ -6,7 +6,7 @@ This recipe accompanies the SSAC 2027 Baseball2Vector analysis. Obtain the input
 
 Export MLB regular-season batting data for **2019–2025**, all players and teams, **PA/IP minimum 0**, one full-season total per player and season (including players who changed teams). Preserve missing values and source units. The required 31 fields and fractional rate columns are listed in [input_schema.json](input_schema.json).
 
-Save the 2019–2020 export as data/raw/batting_stats_2019_2020.csv and the 2021–2025 export as data/raw/fangraphs-leaderboards (1).csv. The second name is required by the loader. The author's historical second file also contained 2026, which the code excludes. Record your download date, exact URL, filters, and any changes in field availability or units. The original download date was not recorded.
+Save the 2019–2020 export as data/raw/batting_stats_2019_2020.csv and the 2021–2025 export as data/raw/batting_stats_2021_2025_all_players.csv. The second name is required by the loader. The author's historical second file also contained 2026, which the code excludes. Record your download date, exact URL, filters, and any changes in field availability or units. The original download date was not recorded.
 
 ## Reproduce
 

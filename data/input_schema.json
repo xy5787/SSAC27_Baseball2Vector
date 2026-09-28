@@ -104,7 +104,7 @@
   "snapshot_sha256": "ae5c148dd9a5b79b8154facc88967119e56b210cd5aab0adc38a6c238edbeb5f",
   "historical_source_hashes": {
     "batting_stats_2019_2020.csv": "e17ca3dad3d7270ac4e5a9e0d40660a13288ef2f110f2fae4ffbac68b40f09e9",
-    "fangraphs-leaderboards (1).csv": "300589ed55dfc7d8ecbcea62647c85621c384c8d4d0161e47a49014f1885a711"
+    "batting_stats_2021_2025_all_players.csv": "300589ed55dfc7d8ecbcea62647c85621c384c8d4d0161e47a49014f1885a711"
   },
   "original_acquisition_date": null,
   "redistribution_license": "Not established; metadata only; no player rows included"

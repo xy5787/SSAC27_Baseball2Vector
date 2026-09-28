@@ -14,7 +14,7 @@ separation is the whole point of the module:
 
 Inputs, both manual FanGraphs leaderboard exports with no PA filter:
 
-    data/raw/fangraphs-leaderboards (1).csv   2021-2026, 465 columns
+    data/raw/batting_stats_2021_2025_all_players.csv   2021-2026, 465 columns
     data/raw/batting_stats_2019_2020.csv      2019-2020, 465 columns
 
 2026 is dropped: it is later than every outcome season in the study, so it can
@@ -40,7 +40,7 @@ from baseball2vec.baselines import pca_tool_scores, zscore_tool_scores
 from baseball2vec.data import preprocess
 from baseball2vec.tools import apply_direction, build_final_groups, season_zscore
 
-EXPORT_2021_2025 = REPO_ROOT / "data" / "raw" / "fangraphs-leaderboards (1).csv"
+EXPORT_2021_2025 = REPO_ROOT / "data" / "raw" / "batting_stats_2021_2025_all_players.csv"
 EXPORT_2019_2020 = REPO_ROOT / "data" / "raw" / "batting_stats_2019_2020.csv"
 
 STUDY_SEASONS = list(range(2019, 2026))
