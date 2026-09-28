@@ -25,7 +25,7 @@ source .venv/bin/activate
 pip install -r requirements-dev.txt
 ```
 
-Follow [the acquisition recipe](data/README.md) to obtain the required exports through authorized access. FanGraphs CSV exports may require membership. Then run from this directory:
+Follow [the acquisition recipe](data/DATA_RECIPE.md) to obtain the required exports through authorized access. FanGraphs CSV exports may require membership. Then run from this directory:
 
 ```bash
 OPENBLAS_NUM_THREADS=1 python scripts/reproduce.py
@@ -38,4 +38,4 @@ The frozen study covers 2019–2025, with 3,070 qualifying player-seasons and 1,
 
 ## Rights and submission status
 
-Project-authored code is provided under the [MIT License](LICENSE). This grants no rights to FanGraphs data; see [DATA_RIGHTS.md](DATA_RIGHTS.md). Raw exports and player-level derived files are intentionally absent. SSAC confirmation that source links and a reconstruction recipe satisfy its current data-sharing requirement is pending.
+Project-authored code is provided under the [MIT License](LICENSE). This grants no rights to FanGraphs data; see [DATA_RIGHTS.md](DATA_RIGHTS.md). Raw exports and player-level derived files are intentionally absent. The organizers advised that this source-link and recipe approach can support reproducibility when researchers can independently access the exact inputs; restricted access or historical revisions may limit exact reproduction.
