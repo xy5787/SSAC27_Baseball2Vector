@@ -101,11 +101,37 @@
     "2024": 1454,
     "2025": 1470
   },
-  "snapshot_sha256": "ae5c148dd9a5b79b8154facc88967119e56b210cd5aab0adc38a6c238edbeb5f",
-  "historical_source_hashes": {
-    "batting_stats_2019_2020.csv": "e17ca3dad3d7270ac4e5a9e0d40660a13288ef2f110f2fae4ffbac68b40f09e9",
-    "batting_stats_2021_2025_all_players.csv": "300589ed55dfc7d8ecbcea62647c85621c384c8d4d0161e47a49014f1885a711"
-  },
+  "snapshot_sha256": "8ca0c7cbf9670f621bdea5ecc56e68a7590efb26407eba29926eadf89044d3de",
   "original_acquisition_date": null,
-  "redistribution_license": "Not established; metadata only; no player rows included"
+  "redistribution_license": "Not established; metadata only; no player rows included",
+  "batting_export_sha256": "2130d2bc07ad64f3429c60a85628a1da9938b9dc4777ddc98277855bd1289e82",
+  "projection_fields": [
+    "PlayerId",
+    "wRC+",
+    "WAR",
+    "PA"
+  ],
+  "projection_seasons_used": [
+    2019,
+    2021,
+    2022,
+    2023,
+    2024,
+    2025
+  ],
+  "projection_systems": {
+    "z": "ZiPS",
+    "s": "Steamer"
+  },
+  "production_source_seasons": [
+    2018,
+    2019,
+    2020,
+    2021,
+    2022,
+    2023,
+    2024,
+    2025
+  ],
+  "common_focal_seasons": 1774
 }

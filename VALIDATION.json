@@ -1,0 +1,59 @@
+{
+  "date": "2026-09-29",
+  "validation_scope": "Fresh standalone directory, no manuscripts or archived predictions supplied to reproduction; local frozen input CSVs copied separately and excluded from publication.",
+  "commands": [
+    "OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 python scripts/reproduce.py",
+    "python -m pytest -q tests"
+  ],
+  "tests_passed": 44,
+  "tests_failed": 0,
+  "tests_skipped": 0,
+  "prediction_checks": [
+    {
+      "analysis": "primary",
+      "prediction_rows": 133392,
+      "max_prediction_difference": 0.0
+    },
+    {
+      "analysis": "selected_summaries",
+      "prediction_rows": 277900,
+      "max_prediction_difference": 0.0
+    },
+    {
+      "analysis": "clipped_zips",
+      "prediction_rows": 40729,
+      "max_prediction_difference": 0.0
+    },
+    {
+      "analysis": "clipped_steamer",
+      "prediction_rows": 40729,
+      "max_prediction_difference": 0.0
+    },
+    {
+      "analysis": "unclipped_zips",
+      "prediction_rows": 40729,
+      "max_prediction_difference": 0.0
+    },
+    {
+      "analysis": "unclipped_steamer",
+      "prediction_rows": 40729,
+      "max_prediction_difference": 0.0
+    }
+  ],
+  "total_prediction_rows_compared": 574208,
+  "environment": {
+    "python": "3.14.6",
+    "numpy": "2.5.1",
+    "pandas": "3.0.3",
+    "scipy": "1.17.1",
+    "scikit-learn": "1.8.0"
+  },
+  "numerical_entrypoints_sha256": {
+    "reproduce.py": "604182ad851f464ef7df24b00c24e40a5a41013166ba58d9c7da2fc754d1e702",
+    "primary_analysis.py": "0ebf5e954f286a0dfb0ef67e7da7282f43f249151a8782b3975b367a6d3af944",
+    "production_increment.py": "47b68a33c7c16e79a1386bac3a8d83f137edb4e9f52f820d3192b86c6204f0d8",
+    "diversity.py": "26d3dee3536e678349dd42ff57d95b44985e54973398fc9478960c33b2bc3544"
+  },
+  "historical_projection_publication_verified": false,
+  "current_manuscript_files_in_commit": false
+}

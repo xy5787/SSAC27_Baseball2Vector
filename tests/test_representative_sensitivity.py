@@ -1,11 +1,13 @@
 """Verify the stronger five-statistic comparator and its held-out comparisons."""
 from pathlib import Path
 import json
+import pytest
 import numpy as np
 import pandas as pd
 
 ROOT=Path(__file__).resolve().parents[1]
 OUT=ROOT/'results_sd10/task10'
+pytestmark=pytest.mark.skipif(not (OUT/'predictions.csv.gz').exists(), reason='Run reproduce.py --stage primary with local inputs')
 KEY=['target','window','context','fold']
 ROW=['player_id','Season_t']
 

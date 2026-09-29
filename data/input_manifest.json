@@ -1,0 +1,99 @@
+{
+  "snapshot": "2026-09-29 refreshed batting source and historical projection files",
+  "export_date": null,
+  "historical_preseason_publication_verified": false,
+  "files": [
+    {
+      "path": "data/raw/BattingStats_2018_2026.csv",
+      "sha256": "2130d2bc07ad64f3429c60a85628a1da9938b9dc4777ddc98277855bd1289e82",
+      "rows": 12934,
+      "columns": 465,
+      "export_date": null,
+      "required": true
+    },
+    {
+      "path": "ProjectionDataset/fangraphs-leaderboard-projections_2019_s.csv",
+      "sha256": "95f2ffea83e9ff2822bdf5efd52f75184d5990b3fea65fa9a6a880b5198a3e05",
+      "rows": 4115,
+      "required": true
+    },
+    {
+      "path": "ProjectionDataset/fangraphs-leaderboard-projections_2019_z.csv",
+      "sha256": "04794d20cb9cdcf806aa55afef80ed87c86db0ad0e98f1a893a42397f959fe25",
+      "rows": 1267,
+      "required": true
+    },
+    {
+      "path": "ProjectionDataset/fangraphs-leaderboard-projections_2020_s.csv",
+      "sha256": "a3455b19e0990814dd97eca8675ad00708393259b255f7d0cc400c4b2f38b337",
+      "rows": 4166,
+      "required": false
+    },
+    {
+      "path": "ProjectionDataset/fangraphs-leaderboard-projections_2020_z.csv",
+      "sha256": "484dd322a7fca3b967301afd8bfb3b5c6e19e46c1626653ddd58811d2034bd91",
+      "rows": 1328,
+      "required": false
+    },
+    {
+      "path": "ProjectionDataset/fangraphs-leaderboard-projections_2021_s.csv",
+      "sha256": "a31cd792ecf423839d3257574b7d648b5cee1f7ecd6a0bf5afca2af84ff12d92",
+      "rows": 3188,
+      "required": true
+    },
+    {
+      "path": "ProjectionDataset/fangraphs-leaderboard-projections_2021_z.csv",
+      "sha256": "99fc5b1b1bbab395dfeb6b70eccbe3bffb1ffbb75f49c38fefc3c5c4ddcb89b2",
+      "rows": 1175,
+      "required": true
+    },
+    {
+      "path": "ProjectionDataset/fangraphs-leaderboard-projections_2022_s.csv",
+      "sha256": "92a275ca61c2b6532777f1ec1560a4efa6bad6dbbe15e1890e9fc69cdcba6139",
+      "rows": 3304,
+      "required": true
+    },
+    {
+      "path": "ProjectionDataset/fangraphs-leaderboard-projections_2022_z.csv",
+      "sha256": "5a78f7b79657f0f15ad58282449378fb356798e5b414b88f2f89372b935e7af2",
+      "rows": 1504,
+      "required": true
+    },
+    {
+      "path": "ProjectionDataset/fangraphs-leaderboard-projections_2023_s.csv",
+      "sha256": "f7e646422395000fd027060f835fd5d945509829ac1f35b76da932e9762d408b",
+      "rows": 3591,
+      "required": true
+    },
+    {
+      "path": "ProjectionDataset/fangraphs-leaderboard-projections_2023_z.csv",
+      "sha256": "f121d8fce74c871b6793b44f574f416a3ce6f900203575e33036d7714e640bb7",
+      "rows": 1716,
+      "required": true
+    },
+    {
+      "path": "ProjectionDataset/fangraphs-leaderboard-projections_2024_s.csv",
+      "sha256": "ffb8ffdd1ccb515a8807321883c2f1966c2e1369dc63cc83692205063656ec35",
+      "rows": 3711,
+      "required": true
+    },
+    {
+      "path": "ProjectionDataset/fangraphs-leaderboard-projections_2024_z.csv",
+      "sha256": "d1b95ec95399b78e37a3f026692ce09144ec31202b86b0d623a3a9b95a925587",
+      "rows": 1733,
+      "required": true
+    },
+    {
+      "path": "ProjectionDataset/fangraphs-leaderboard-projections_2025_s.csv",
+      "sha256": "382b71fa05ecc04f92da1213f451d43fc751d419790e1ed2005ca8966e3b5820",
+      "rows": 4140,
+      "required": true
+    },
+    {
+      "path": "ProjectionDataset/fangraphs-leaderboard-projections_2025_z.csv",
+      "sha256": "15adbeed0954f0bdfa5de76c0cc19badc6a19f945d5d8d5ffe55a9b66a8c00c1",
+      "rows": 1963,
+      "required": true
+    }
+  ]
+}

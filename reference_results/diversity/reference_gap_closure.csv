@@ -1,0 +1,2 @@
+estimate,ci_low,ci_high,n_boot,denominator,min_bootstrap_denominator,definition,bootstrap_unit,interpretation
+0.3651498524565847,0.31529776263742243,0.4296934337597537,2000,0.5335526264320404,0.4836685817087204,(random median - matched median) / (random median - same-hitter median),focal stable player ID; existing joint draws across all three groups,post-feedback descriptive gap fraction; not causal or explained information

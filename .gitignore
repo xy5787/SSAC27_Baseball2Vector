@@ -11,3 +11,13 @@ __pycache__/
 abstract/**/*.png
 abstract/**/*.svg
 abstract/submission_assets_manifest.json
+
+# Projection exports, sensitivity outputs, and unpublished writing
+/ProjectionDataset/
+/results_zscore/
+/abstract/
+/paper/
+/ABSTRACT.md
+/tentative_full_paper*
+/figures/
+/tables/

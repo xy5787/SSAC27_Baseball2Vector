@@ -1,0 +1,13 @@
+system,target,window,origin,n_test,n_players,contrast,baseline,candidate,improvement_mae,ci_low,ci_high,excludes_zero,n_boot
+ZiPS,wrc_plus,all,pooled,1706,609,clipped − unclipped,clipped,unclipped,0.022241595745501996,2.3823839963643808e-05,0.05374852040215194,True,2000
+Marcel,wrc_plus,all,pooled,1706,609,clipped − unclipped,clipped,unclipped,0.025874564783311627,-0.006327559635712188,0.0746044273589452,False,2000
+ZiPS,wrc_plus,no2020,pooled,1427,570,clipped − unclipped,clipped,unclipped,0.026471131928961,-0.0006593165361900688,0.06266406084236992,False,2000
+Marcel,wrc_plus,no2020,pooled,1427,570,clipped − unclipped,clipped,unclipped,0.04228198157909091,-0.001487750890840811,0.10397580359439809,False,2000
+ZiPS,war_rate,all,pooled,1706,609,clipped − unclipped,clipped,unclipped,0.00036336705684014703,-0.0014656990887449207,0.0022143880821933284,False,2000
+Marcel,war_rate,all,pooled,1706,609,clipped − unclipped,clipped,unclipped,0.0006613688151708708,-0.0010844897298670163,0.0027351992130925525,False,2000
+ZiPS,war_rate,no2020,pooled,1427,570,clipped − unclipped,clipped,unclipped,1.6312127525619502e-05,-0.0022760490350772987,0.002672611937242041,False,2000
+Marcel,war_rate,no2020,pooled,1427,570,clipped − unclipped,clipped,unclipped,0.0014022054848981114,-0.0013523140194356908,0.004792076004915712,False,2000
+Steamer,wrc_plus,all,pooled,1706,609,clipped − unclipped,clipped,unclipped,0.022034870797824624,0.0023478465596990183,0.04859173728585712,True,2000
+Steamer,wrc_plus,no2020,pooled,1427,570,clipped − unclipped,clipped,unclipped,0.028124483506644538,0.004513662808624997,0.057607693840426924,True,2000
+Steamer,war_rate,all,pooled,1706,609,clipped − unclipped,clipped,unclipped,0.0003078526120916525,-0.0016882408621098355,0.0026499296026362236,False,2000
+Steamer,war_rate,no2020,pooled,1427,570,clipped − unclipped,clipped,unclipped,0.0010746510729096048,-0.0016791852642156768,0.004270250831387979,False,2000
