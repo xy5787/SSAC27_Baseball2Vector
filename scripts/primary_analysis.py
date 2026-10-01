@@ -18,7 +18,7 @@ def run():
     INPUT.parent.mkdir(parents=True,exist_ok=True)
     raw.to_csv(INPUT,index=False); c.to_csv(R/'task8/cohort.csv',index=False)
     t8.INPUT=INPUT;t8.OUT=R/'task8';t10.OUT=R/'task10'
-    shutil.copy(sc.SSAC_ROOT/'protocols/task10.md',t10.OUT/'PROTOCOL.md')
+    shutil.copy(sc.SSAC_ROOT/'protocols/reproduction.md',t10.OUT/'PROTOCOL.md')
     for tool,stats in t8.FEATURE_GROUPS.items():
         q=c[[f'cs_{sc.sanitize(s)}' for s in stats]].mean(axis=1)
         c[f'pre_{tool}']=q.groupby(c.Season).transform(lambda x:(x-x.mean())/(x.std(ddof=0)+1e-12))

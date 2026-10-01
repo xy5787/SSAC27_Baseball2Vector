@@ -1,15 +1,40 @@
-# Reproduction scope — 2026-09-29
+# Analysis protocol
 
-The primary analysis repeats the submitted forecast comparisons from Tasks 8–10 with the refreshed 2018–2026 source restricted to 2019–2025. The 2020 outcomes provide the initial training window; tests are 2021–2025 (1,706 transitions). Excluding transitions involving 2020 leaves 2023–2025 tests (1,073). Its history pool begins in 2019.
+## Profiles and cohorts
 
-The projection-system extension uses 2018–2025 history, excludes 2020 outcomes, and starts with 347 outcome-2019 training rows. It has the same 1,706 main test transitions. Removing 2020 inputs leaves 1,427 tests in 2022–2025. Known 2020 history remains in Marcel lookbacks. No analysis uses 2026.
+B2V uses 22 FanGraphs statistics grouped into Power, Contact, Plate Discipline, Defense, and Speed. Constituents receive PA-based shrinkage, within-season standardization, and direction alignment. Equal-weight group means are standardized again and mapped to `clip(50 + 10z, 20, 80)`. The implementation and shrinkage constants are in `src/baseball2vec/tools.py` and `scripts/common.py`.
 
-`projection_original.md` preserves the historical specification before the original unclipped ZiPS/Steamer results. Its approval gates and workspace paths record that execution history; they are not dependencies of the portable runner. Both systems subsequently ran. `projection_clipped.md` records the explicit post-result amendment: clipped SD10 is now the primary representation, with original unclipped results retained as sensitivity. This is not a new preregistration.
+Profiles use hitters with at least 100 PA. Forecast transitions require at least 100 PA in both adjacent seasons. Lower-PA observations remain available for Marcel history. Targets are next-season wRC+ and WAR/600 (`600 × WAR / PA`). No analysis uses 2026.
 
-The portable runner retains the numerical fitting, cohort, split, ridge tuning (50 alphas, training-player GroupKFold), projection matching and 2,000 paired player-bootstrap routines. It replaces machine-specific approval files and comparisons to private archived predictions with input hash checks, local independent fits and aggregate reference comparisons. No manuscript output is needed. Historical projection publication timestamps remain unverified.
+| Analysis | Source years | Main test outcomes | Training and sensitivity |
+| --- | --- | --- | --- |
+| Primary | 2019–2025 | 2021–2025; 1,706 transitions | Initial training uses 2020 outcomes. Excluding transitions involving 2020 leaves 1,073 tests in 2023–2025. |
+| Projection extension | 2018–2025 | 2021–2025; 1,706 transitions | Initial training uses 347 outcome-2019 transitions; all 2020 outcomes are excluded. Also excluding 2020 inputs leaves 1,427 tests in 2022–2025. |
 
-Reference results contain aggregate task8/task9 performance and contrasts, task10 performance/contrasts/selection, diversity summaries and ratio intervals, both projection systems at both scales, and paired clipping comparisons. All prediction and matching rows remain local. Confidence intervals are nominal, conditional on fitted predictions; they omit multiplicity correction and shared season shocks.
+Both analyses retain observed 2020 records in Marcel lookbacks. Their main test transitions coincide, but training samples and history differ. Marcel results should therefore be compared within the corresponding analysis.
 
-The gap-closure ratio in diversity was added after feedback using the same unrounded medians and joint resamples. It is descriptive, not explained variance or a causal matching effect. Model selection and evaluation definitions are unchanged.
+## Forecasts
 
-Historical Task 8–10 protocols also describe retrieval experiments, human-study preparation, exploratory counting WAR and PCA-loading exports. Those are not run or claimed as reproduced by this release. The current runner generates descriptive matching, rate-outcome forecasts, selected-representative comparisons, both projection scales and their paired comparisons. The default full command then verifies aggregate references and executes the tests; new-snapshot mode explicitly reports reference differences.
+Outer folds expand through time, with training outcomes strictly earlier than test outcomes. Ridge models use training-fold median imputation and standardization. The penalty is selected from 50 log-spaced values between 0.001 and 10,000 by five-fold player-grouped inner CV, minimizing mean MAE. Ties favor the smaller penalty. PCA is fitted within each training split.
+
+Primary comparisons include current performance, B2V, all 22 constituents, grouped and unrestricted five-component PCA, fixed and training-selected five-statistic summaries, and Marcel-style history projections. Defense and Speed ablations and history-augmented models use the same splits and tuning.
+
+The fixed representatives are ISO, Contact%, BB%, BsR, and Def. The selected comparator chooses between this set and 17 single-statistic replacements within the same tool groups, using inner-CV MAE on outer-training data only. Ties follow variant order, then penalty order. Five leave-one-out variants are also evaluated. This follow-up was specified after viewing earlier comparisons; it was not an original-study preregistration.
+
+The projection extension matches FanGraphs PlayerId and outcome year to historical ZiPS or Steamer files. Each system compares the original projection, ridge recalibration, and augmentation with B2V or all 22 inputs. Marcel reference models share the same eligible rows. Projection WAR/600 uses projected WAR and PA. The two systems use identical training and evaluation cohorts.
+
+## Profile comparisons
+
+The descriptive cohort contains 3,070 player-seasons. Each focal hitter is matched to another same-season hitter within 0.2 WAR and five wRC+ points, minimizing the season-standardized scalar gap with deterministic ID tie-breaking. Comparators may be reused. Restricting to focals with an adjacent-season observation leaves 1,774 focal seasons from 626 hitters.
+
+The same focals supply matched, same-hitter next-season, and random same-season pairs. Random comparators are different hitters in the focal PA stratum: 100–249, 250–499, or 500+. Profile distance is the root mean square of five score differences divided by each tool's pooled sample standard deviation.
+
+Gap closure is `(random median − matched median) / (random median − same-hitter median)`. It was added after feedback and is descriptive, not explained variance or a causal effect.
+
+## Uncertainty and sensitivity
+
+All runs use seed 42 and 2,000 paired player-cluster bootstrap draws. Forecast intervals condition on fitted predictions; descriptive intervals use joint focal-player resamples with fixed matches and normalization. Intervals are nominal 95% percentile intervals without multiplicity or shared-season-shock correction. Reused descriptive comparators are not separately clustered.
+
+Clipped 20–80 scores became the primary specification after the original unclipped results were observed. Unclipped forecasts and paired scale comparisons remain sensitivity analyses; this change was not prospectively preregistered. The 2020 sensitivities refit preprocessing, selection, and models after excluding the specified transitions.
+
+Historical projection publication times remain unverified. These analyses use retrospective files and do not certify real-time preseason performance.

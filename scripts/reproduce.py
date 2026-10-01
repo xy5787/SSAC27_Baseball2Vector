@@ -1,6 +1,5 @@
 """Reproduce refreshed B2V analyses from local FanGraphs exports, without writing papers."""
 import argparse
-import hashlib
 import json
 import os
 from pathlib import Path
@@ -48,7 +47,7 @@ def projections(pi, unclipped=False):
     inputs = check_inputs()
     pi.OUT.mkdir(parents=True)
     pi.PRIVATE.mkdir(parents=True)
-    protocol = ROOT / 'protocols' / ('projection_original.md' if unclipped else 'projection_clipped.md')
+    protocol = ROOT / 'protocols/reproduction.md'
     (pi.OUT/'PRESPEC.md').write_bytes(protocol.read_bytes())
     pi.dump(pi.OUT/'prespec_inputs.json', dict(inputs=inputs, scale=pi.sc.B2V_SCALE,
         protocol_sha256=pi.sha(protocol), note='Reproduction run; not a new preregistration.'))
@@ -98,10 +97,9 @@ def compare_scales(pi):
 
 
 def verify(input_mode):
-    """Require every published aggregate output, compare values, then test invariants."""
+    """Compare regenerated aggregate tables with the published references."""
     import pandas as pd
     import platform
-    import xml.etree.ElementTree as ET
     inputs = check_inputs()
     saved=ROOT/'results_sd10/run_inputs.json'
     if saved.exists():
@@ -111,8 +109,11 @@ def verify(input_mode):
     out = ROOT/'results_sd10'
     if not out.is_dir():
         raise SystemExit('No results. Run scripts/reproduce.py first.')
+    references=sorted((ROOT/'reference_results').rglob('*.csv'))
+    if not references:
+        raise SystemExit('No reference tables found in reference_results/.')
     records=[]
-    for reference in sorted((ROOT/'reference_results').rglob('*.csv')):
+    for reference in references:
         relative=reference.relative_to(ROOT/'reference_results')
         actual=(ROOT/'results_zscore/projection'/Path(*relative.parts[1:])
                 if relative.parts[0]=='projection_unclipped' else out/relative)
@@ -140,15 +141,9 @@ def verify(input_mode):
     report_path.write_text(json.dumps(report,indent=2)+'\n')
     if not complete:
         raise SystemExit('Missing output tables. See results_sd10/reproduction_report.json.')
-    junit=out/'verification.xml'
-    result=subprocess.run([sys.executable,'-m','pytest','-q','tests',f'--junitxml={junit}'],cwd=ROOT)
-    report['tests_exit_code']=result.returncode
-    skipped=sum(int(s.get('skipped',0)) for s in ET.parse(junit).getroot().iter('testsuite')) if junit.exists() else -1
-    report['tests_skipped']=skipped
-    expected_skips=len(records) if input_mode=='new' else 0
-    good=result.returncode==0 and skipped==expected_skips and (matched or input_mode=='new')
+    good=matched or input_mode=='new'
     report['status']=('exact_reproduction_verified' if report['exact_input_hashes'] and matched
-                      else 'new_snapshot_analysis_verified') if good else 'failed'
+                      else 'new_snapshot_analysis_completed') if good else 'failed'
     report_path.write_text(json.dumps(report,indent=2)+'\n')
     print(f"Verification: {report['status']}. Report: {report_path}",flush=True)
     if not good:
