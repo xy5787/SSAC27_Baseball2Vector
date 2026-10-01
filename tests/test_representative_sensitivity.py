@@ -1,6 +1,7 @@
 """Verify the stronger five-statistic comparator and its held-out comparisons."""
 from pathlib import Path
 import json
+import os
 import pytest
 import numpy as np
 import pandas as pd
@@ -60,5 +61,8 @@ def test_original_predictions_and_reported_mae_differences_reproduce():
         base=(row.target,row.window,row.context)
         expected=p.loc[(*base,row.baseline),'mae']-p.loc[(*base,row.candidate),'mae']
         np.testing.assert_allclose(row.improvement_mae,expected,atol=1e-10)
-        assert row.n_test==(1706 if row.window=='all' else 1073)
+        observed=pred[pred.target.eq(row.target)&pred.window.eq(row.window)&pred.context.eq(row.context)&pred.model.eq(row.candidate)]
+        assert row.n_test==len(observed)
+        if os.environ.get('B2V_INPUT_MODE', 'exact') == 'exact':
+            assert row.n_test==(1706 if row.window=='all' else 1073)
         assert row.ci_low<row.improvement_mae<row.ci_high

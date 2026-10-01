@@ -8,24 +8,12 @@ import subprocess
 import sys
 
 ROOT = Path(__file__).resolve().parents[1]
-STAGES = ['all', 'inputs', 'primary', 'projections', 'projection-unclipped', 'compare-scales']
+STAGES = ['all', 'inputs', 'primary', 'projections', 'projection-unclipped', 'compare-scales', 'verify']
 
 
 def check_inputs(projections=True):
-    manifest = json.loads((ROOT / 'data/input_manifest.json').read_text())
-    checked = []
-    for item in manifest['files']:
-        if not item['required'] or (not projections and item['path'].startswith('ProjectionDataset/')):
-            continue
-        path = ROOT / item['path']
-        if not path.is_file():
-            raise SystemExit(f'Missing {item["path"]}. Follow data/DATA_RECIPE.md.')
-        digest = hashlib.sha256(path.read_bytes()).hexdigest()
-        if digest != item['sha256']:
-            raise SystemExit(f'Snapshot mismatch: {item["path"]}; expected {item["sha256"]}, got {digest}. '
-                             'Do not relabel a revised export as the frozen snapshot; see data/DATA_RECIPE.md.')
-        checked.append(item)
-    return checked
+    from input_validation import inspect_inputs
+    return inspect_inputs(ROOT, projections, os.environ.get('B2V_INPUT_MODE', 'exact'))
 
 
 def projection_table(pi):
@@ -109,13 +97,87 @@ def compare_scales(pi):
     pi.dump(out/'scale_validation.json',dict(systems=validation,common_reference_rows=len(j),all_passed=True))
 
 
+def verify(input_mode):
+    """Require every published aggregate output, compare values, then test invariants."""
+    import pandas as pd
+    import platform
+    import xml.etree.ElementTree as ET
+    inputs = check_inputs()
+    saved=ROOT/'results_sd10/run_inputs.json'
+    if saved.exists():
+        before=json.loads(saved.read_text())['files']
+        if {x['path']:x['sha256'] for x in before} != {x['path']:x['sha256'] for x in inputs}:
+            raise SystemExit('Inputs changed since fitting. Use a fresh checkout; existing results cannot verify these inputs.')
+    out = ROOT/'results_sd10'
+    if not out.is_dir():
+        raise SystemExit('No results. Run scripts/reproduce.py first.')
+    records=[]
+    for reference in sorted((ROOT/'reference_results').rglob('*.csv')):
+        relative=reference.relative_to(ROOT/'reference_results')
+        actual=(ROOT/'results_zscore/projection'/Path(*relative.parts[1:])
+                if relative.parts[0]=='projection_unclipped' else out/relative)
+        record=dict(path=str(relative), present=actual.is_file(), matches_reference=False)
+        if actual.is_file():
+            a,b=pd.read_csv(actual),pd.read_csv(reference)
+            record.update(rows=len(a), reference_rows=len(b))
+            try:
+                assert set(a.columns)==set(b.columns), 'Column sets differ'
+                keys=[c for c in b if pd.api.types.is_string_dtype(b[c].dtype)]
+                if keys:
+                    a=a.sort_values(keys,kind='stable',na_position='last').reset_index(drop=True)
+                    b=b.sort_values(keys,kind='stable',na_position='last').reset_index(drop=True)
+                pd.testing.assert_frame_equal(a[b.columns],b,check_exact=False,rtol=1e-8,atol=1e-8)
+                record['matches_reference']=True
+            except AssertionError as exc:
+                record['difference']=str(exc)[:1000]
+        records.append(record)
+    complete=all(x['present'] for x in records)
+    matched=all(x['matches_reference'] for x in records)
+    report=dict(input_mode=input_mode, exact_input_hashes=all(x['matches_snapshot'] for x in inputs),
+                python=platform.python_version(), inputs=inputs, aggregates=records,
+                all_outputs_present=complete, all_references_match=matched, status='failed')
+    report_path=out/'reproduction_report.json'
+    report_path.write_text(json.dumps(report,indent=2)+'\n')
+    if not complete:
+        raise SystemExit('Missing output tables. See results_sd10/reproduction_report.json.')
+    junit=out/'verification.xml'
+    result=subprocess.run([sys.executable,'-m','pytest','-q','tests',f'--junitxml={junit}'],cwd=ROOT)
+    report['tests_exit_code']=result.returncode
+    skipped=sum(int(s.get('skipped',0)) for s in ET.parse(junit).getroot().iter('testsuite')) if junit.exists() else -1
+    report['tests_skipped']=skipped
+    expected_skips=len(records) if input_mode=='new' else 0
+    good=result.returncode==0 and skipped==expected_skips and (matched or input_mode=='new')
+    report['status']=('exact_reproduction_verified' if report['exact_input_hashes'] and matched
+                      else 'new_snapshot_analysis_verified') if good else 'failed'
+    report_path.write_text(json.dumps(report,indent=2)+'\n')
+    print(f"Verification: {report['status']}. Report: {report_path}",flush=True)
+    if not good:
+        raise SystemExit(1)
+
+
 def main():
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--stage',choices=STAGES,default='all')
+    parser.add_argument('--input-mode', choices=['exact', 'new'], default='exact',
+                        help='exact: require published hashes; new: validate a newly downloaded snapshot and report differences')
     args=parser.parse_args()
+    os.environ['B2V_INPUT_MODE']=args.input_mode
+    os.environ.setdefault('OPENBLAS_NUM_THREADS', '1')
+    os.environ.setdefault('OMP_NUM_THREADS', '1')
     os.environ['B2V_SCALE']='zscore' if args.stage=='projection-unclipped' else 'sd10'
     if args.stage=='inputs':
         print(f'Verified {len(check_inputs())} required input files.');return
+    if args.stage == 'verify':
+        verify(args.input_mode); return
+    # Fail before any expensive fitting if any required input is absent or invalid.
+    inputs = check_inputs(projections=args.stage != 'primary')
+    if args.stage == 'all':
+        for name in ['results_sd10', 'results_zscore', 'data/raw/generated']:
+            if (ROOT/name).exists():
+                raise SystemExit(f'Existing {name}; use a fresh checkout to preserve prior runs.')
+        (ROOT/'results_sd10').mkdir()
+        (ROOT/'results_sd10/run_inputs.json').write_text(json.dumps(
+            dict(input_mode=args.input_mode, files=inputs), indent=2)+'\n')
     import production_increment as pi
     if args.stage in ['all','primary']:
         check_inputs(projections=False)
@@ -126,9 +188,11 @@ def main():
     if args.stage in ['all','projections','projection-unclipped']:
         projections(pi,unclipped=args.stage=='projection-unclipped')
     if args.stage=='all':
-        subprocess.run([sys.executable,__file__,'--stage','projection-unclipped'],check=True,env=os.environ.copy())
+        subprocess.run([sys.executable,__file__,'--stage','projection-unclipped','--input-mode',args.input_mode],check=True,env=os.environ.copy())
     if args.stage in ['all','compare-scales']:
         compare_scales(pi)
+    if args.stage == 'all':
+        verify(args.input_mode)
 
 
 if __name__=='__main__': main()

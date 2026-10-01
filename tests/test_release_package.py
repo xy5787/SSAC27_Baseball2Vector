@@ -30,3 +30,19 @@ def test_input_inventory_has_twelve_required_projections_and_one_batting_file():
     expected={f'ProjectionDataset/fangraphs-leaderboard-projections_{y}_{s}.csv' for y in [2019,2021,2022,2023,2024,2025] for s in ['z','s']}
     assert set(projections)==expected
     assert manifest['historical_preseason_publication_verified'] is False
+
+
+def test_git_tracking_matches_publication_boundary():
+    spec=importlib.util.spec_from_file_location('release_check',ROOT/'scripts/check_release.py')
+    module=importlib.util.module_from_spec(spec);spec.loader.exec_module(module)
+    module.check_tracked(module.validate())
+
+
+def test_unlisted_tracked_file_is_rejected(monkeypatch, tmp_path):
+    import pytest
+    spec=importlib.util.spec_from_file_location('release_check',ROOT/'scripts/check_release.py')
+    module=importlib.util.module_from_spec(spec);spec.loader.exec_module(module)
+    monkeypatch.setattr(module, 'ROOT', tmp_path)
+    monkeypatch.setattr(module, 'tracked_paths', lambda: {'README.md', 'data/raw/private.csv'})
+    with pytest.raises(SystemExit, match='data/raw/private.csv'):
+        module.check_tracked(['README.md'])

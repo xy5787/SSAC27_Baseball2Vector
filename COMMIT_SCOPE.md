@@ -15,8 +15,8 @@ git diff --cached --stat
 git diff --cached --name-only
 ```
 
-`--stage`는 허용된 파일만 stage합니다. 다른 파일이 이미 stage되어 있으면 자동으로 해제하지 않고 중단합니다. commit과 push는 수행하지 않습니다. 이후 사용자가 검토하고 커밋할 때 사용할 메시지 예: `Add reproducible ZiPS and Steamer increment analyses`.
+`--stage`는 허용된 파일과 폐기된 진입점 2개의 삭제만 stage합니다. 검사기는 Git 추적 파일도 허용 목록과 대조합니다. 다른 파일이 이미 stage되어 있으면 자동으로 해제하지 않고 중단합니다. commit과 push는 수행하지 않습니다. 이후 사용자가 검토하고 커밋할 때 사용할 메시지 예: `Add reproducible ZiPS and Steamer increment analyses`.
 
 재현 실행: `OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 python scripts/reproduce.py`. 새 실험 설계를 추가한 것이 아니라 기존 결과와 같은 수치 루틴을 독립 경로에 배치한 것입니다. 원자료가 없는 환경에서는 데이터 의존 테스트가 명시적으로 skip됩니다. 모든 결과 검증을 실행하려면 recipe에 따라 정확한 로컬 파일을 준비하고 전체 재현을 먼저 실행합니다.
 
-배포 파일만 별도 경로로 옮길 경우 manifest의 파일 목록과 manifest 자체를 사용합니다. 원고나 부모 저장소 이력은 필요하지 않습니다. `scripts/build_submission_assets.py`, `scripts/task9_full_pca.py`는 과거 진입점으로, 이번 분석 allowlist와 재현 경로에 포함되지 않습니다. `abstract/`는 원격에서 삭제된 상태를 유지합니다.
+배포 파일만 별도 경로로 옮길 경우 manifest의 파일 목록과 manifest 자체를 사용합니다. 원고나 부모 저장소 이력은 필요하지 않습니다. `scripts/build_submission_assets.py`, `scripts/task9_full_pca.py`는 과거 진입점으로, 이번 배포에서 제거했으며 재현 경로에 포함되지 않습니다. `abstract/`는 원격에서 삭제된 상태를 유지합니다.

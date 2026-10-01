@@ -55,5 +55,44 @@
     "diversity.py": "26d3dee3536e678349dd42ff57d95b44985e54973398fc9478960c33b2bc3544"
   },
   "historical_projection_publication_verified": false,
-  "current_manuscript_files_in_commit": false
+  "current_manuscript_files_in_commit": false,
+  "end_to_end_validation": {
+    "checked_at": "2026-10-02T00:08:24.795328+09:00",
+    "scope": "Independent temporary copies of allowlisted release files plus 13 local CSV inputs; no archived predictions or parent-code imports. Existing pinned environment used.",
+    "runs": {
+      "exact": {
+        "command": "python scripts/reproduce.py",
+        "status": "exact_reproduction_verified",
+        "input_files": 13,
+        "aggregate_files": 30,
+        "matching_aggregate_files": 30,
+        "tests_passed": 57,
+        "tests_skipped": 0,
+        "exit_code": 0
+      },
+      "new_snapshot_simulation": {
+        "command": "python scripts/reproduce.py --input-mode new",
+        "status": "new_snapshot_analysis_verified",
+        "input_files": 13,
+        "aggregate_files": 30,
+        "matching_aggregate_files": 12,
+        "tests_passed": 27,
+        "tests_skipped": 30,
+        "exit_code": 0,
+        "input_change": "Validation fixture only: remove optional Name.1/Team.1/Season.1 columns and add 0.01 to batting wRC+; no claim of a fresh provider acquisition."
+      }
+    },
+    "source_sha256": {
+      "scripts/check_release.py": "f00d0e88665b21dcf80eb99ff8204cecda29330f7b3f5a5d3de3459163a6d91f",
+      "scripts/common.py": "25b5f09aecff00d4c40cebccdb7f7891f54e551605a5c0fc291f40bdf2e91f31",
+      "scripts/data.py": "d27ebe20b23e009e7fe08347b256f2ccb7c16b3f25da1e9966a9a617f73b2be6",
+      "scripts/diversity.py": "26d3dee3536e678349dd42ff57d95b44985e54973398fc9478960c33b2bc3544",
+      "scripts/input_validation.py": "7a6a41f1b0c02934ad71b7cfbb83ebed526592098463d998fa1ee1a27339e416",
+      "scripts/primary_analysis.py": "0ebf5e954f286a0dfb0ef67e7da7282f43f249151a8782b3975b367a6d3af944",
+      "scripts/production_increment.py": "85d655fb7462eee21cf76edd81f103d850ee3295d8924cf5e639eeda9c4a7481",
+      "scripts/reproduce.py": "870d58d26bcaa7ef592078782a4d72a26224a86e1e2b9d337d24ebf11ac0422b",
+      "scripts/task10_representative_sensitivity.py": "d30ea20f21c3898f1c7935773e9f42a910b274336eef9c749c5724e523272b47",
+      "scripts/task8_submission_strengthening.py": "6fd26451993bd6d02983ccdd2c8765791b70ae53a66e41dd59866490948ff00c"
+    }
+  }
 }

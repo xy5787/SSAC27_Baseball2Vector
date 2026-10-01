@@ -4,6 +4,7 @@ from functools import lru_cache
 import numpy as np
 import pandas as pd
 import pytest
+import os
 ROOT=Path(__file__).resolve().parents[1]
 RESULT=ROOT/'results_sd10/projection'
 PRIVATE=ROOT/'data/raw/generated'
@@ -47,7 +48,9 @@ def test_clipped_increments_and_cis_reconstruct_from_errors():
         system='steamer' if r.system=='Steamer' else 'zips'
         prefix={'Steamer':'S','ZiPS':'Z','Marcel':'R'}[r.system]
         p=predictions(system,'clipped');a=get(p,r.target,r.window,prefix+'1');b=get(p,r.target,r.window,prefix+'2')
-        assert a.index.equals(b.index) and len(a)==r.n_test==(1706 if r.window=='all' else 1427)
+        assert a.index.equals(b.index) and len(a)==r.n_test
+        if os.environ.get('B2V_INPUT_MODE', 'exact') == 'exact':
+            assert r.n_test==(1706 if r.window=='all' else 1427)
         ea=abs(a.y_true-a.prediction);eb=abs(b.y_true-b.prediction)
         np.testing.assert_allclose([ea.mean(),eb.mean(),(ea-eb).mean()],[r.calibrated_baseline_mae,r.plus_B2V_mae,r.B2V_increment],atol=1e-12,rtol=0)
         np.testing.assert_allclose(bootstrap((ea-eb).to_numpy(),a.index.get_level_values('player_id')),[r.ci_low,r.ci_high],atol=1e-12,rtol=0)

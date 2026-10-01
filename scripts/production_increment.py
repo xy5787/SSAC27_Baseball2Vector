@@ -27,7 +27,8 @@ def dump(path, data):
 def source(year_start):
     raw = pd.read_csv(SOURCE, low_memory=False)
     for col in ['Name', 'Team', 'Season']:
-        assert raw[col].equals(raw[col+'.1'])
+        if col+'.1' in raw:
+            assert raw[col].equals(raw[col+'.1'])
     raw['player_id'] = 'fg:' + raw.PlayerId.astype('Int64').astype(str)
     cols = ['player_id', 'Name', 'Team', 'Season', 'PA', 'WAR', 'wRC+', 'OPS', 'Age', *sc.CONSTITUENT_STATS]
     raw = raw.loc[raw.Season.between(year_start, 2025), cols].copy()
@@ -213,12 +214,14 @@ def alignment_check(kept,system):
 
 def run_production(system='zips'):
     raw=source(2018);cohort=t8.cohort_from_raw(raw);base=t8.transitions(cohort)
-    assert len(raw)==11462 and len(cohort)==3518 and len(base)==2328
+    if os.environ.get('B2V_INPUT_MODE', 'exact') == 'exact':
+        assert len(raw)==11462 and len(cohort)==3518 and len(base)==2328
     projection=load_projection(system);prefix='Z' if system=='zips' else 'S'
     parts=[];tunes=[];coefs=[];folds=[];flows=[];alignment_frame=None
     for tk in ['wrc_plus','war_rate']:
         frame,flow=join_projection(target_frame(raw,base,tk),projection,tk)
-        assert len(frame)==2053
+        if os.environ.get('B2V_INPUT_MODE', 'exact') == 'exact':
+            assert len(frame)==2053
         flows.extend(flow)
         if tk=='wrc_plus':alignment_frame=frame
         original=t8.specs(sc.TARGETS[tk])
@@ -227,7 +230,8 @@ def run_production(system='zips'):
         for window,b in [('all',frame),('no2020',frame[frame.Season_t.ne(2020)].copy())]:
             p,t,c,f=fit_window(b,tk,window,specs,prefix+'0' if tk=='wrc_plus' else None,prefix+'2')
             expected=1706 if window=='all' else 1427
-            assert p.drop_duplicates(KEY).shape[0]==expected
+            if os.environ.get('B2V_INPUT_MODE', 'exact') == 'exact':
+                assert p.drop_duplicates(KEY).shape[0]==expected
             parts.append(p);tunes.append(t);coefs.append(c);folds.append(f)
     p=pd.concat(parts,ignore_index=True)
     tables=write_arm(system,p,pd.concat(tunes,ignore_index=True),pd.concat(folds,ignore_index=True),

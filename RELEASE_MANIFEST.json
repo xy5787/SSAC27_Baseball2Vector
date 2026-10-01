@@ -14,8 +14,8 @@
     },
     {
       "path": "COMMIT_SCOPE.md",
-      "sha256": "8fa30d1a4e818a9249a8b1af727a266a98dc6816577dddf3a822e71ee04ee71d",
-      "bytes": 2206
+      "sha256": "b3591e7349b5bd54537cc33b57b36b79f20772f39bedf5c069a59e2e1155a6e0",
+      "bytes": 2321
     },
     {
       "path": "DATA_RIGHTS.md",
@@ -29,18 +29,18 @@
     },
     {
       "path": "README.md",
-      "sha256": "f5b66daa88c7cab22f46db05814a191023675626b416dc25f471931f834735cf",
-      "bytes": 3114
+      "sha256": "bd41b79d96bef43fda67bb0353d5f3ca44e879296a457df784ec1d6e662d65f7",
+      "bytes": 6907
     },
     {
       "path": "VALIDATION.json",
-      "sha256": "b798b8fd1982f4e9ee6ffbcc8919eab12a8a65f74fb12021bdaae2955dd48cba",
-      "bytes": 1862
+      "sha256": "6fd8ecedb8510fef42fa14b612ef5d4d9a30a57d925dc53acfa2c49035b7d254",
+      "bytes": 4040
     },
     {
       "path": "data/DATA_RECIPE.md",
-      "sha256": "8401e2326d3df47a71bdc7649329adcbe849e305579b64fd8ed6b83622bef314",
-      "bytes": 7147
+      "sha256": "f3c583cefcadb34c1e587a3c6c2f51e5b3e7265ab08a7784a8765c814139a75c",
+      "bytes": 7620
     },
     {
       "path": "data/README.md",
@@ -69,8 +69,8 @@
     },
     {
       "path": "protocols/reproduction.md",
-      "sha256": "4947be1eeb9d497b58698aae6a2344957652da5cd6500b21f662d35566f69727",
-      "bytes": 2232
+      "sha256": "35511fd72508f5358e3e1d03cbbc9b14208c1785527472c7b69a0af49556667d",
+      "bytes": 2787
     },
     {
       "path": "protocols/task10.md",
@@ -249,8 +249,8 @@
     },
     {
       "path": "scripts/check_release.py",
-      "sha256": "a15943528090bfb2cc5637b33f3eea5171368e9e04084f62db85ef5ba8fc15ba",
-      "bytes": 2373
+      "sha256": "f00d0e88665b21dcf80eb99ff8204cecda29330f7b3f5a5d3de3459163a6d91f",
+      "bytes": 3201
     },
     {
       "path": "scripts/common.py",
@@ -268,19 +268,24 @@
       "bytes": 6823
     },
     {
+      "path": "scripts/input_validation.py",
+      "sha256": "7a6a41f1b0c02934ad71b7cfbb83ebed526592098463d998fa1ee1a27339e416",
+      "bytes": 4166
+    },
+    {
       "path": "scripts/primary_analysis.py",
       "sha256": "0ebf5e954f286a0dfb0ef67e7da7282f43f249151a8782b3975b367a6d3af944",
       "bytes": 4006
     },
     {
       "path": "scripts/production_increment.py",
-      "sha256": "47b68a33c7c16e79a1386bac3a8d83f137edb4e9f52f820d3192b86c6204f0d8",
-      "bytes": 16187
+      "sha256": "85d655fb7462eee21cf76edd81f103d850ee3295d8924cf5e639eeda9c4a7481",
+      "bytes": 16426
     },
     {
       "path": "scripts/reproduce.py",
-      "sha256": "604182ad851f464ef7df24b00c24e40a5a41013166ba58d9c7da2fc754d1e702",
-      "bytes": 7257
+      "sha256": "870d58d26bcaa7ef592078782a4d72a26224a86e1e2b9d337d24ebf11ac0422b",
+      "bytes": 11115
     },
     {
       "path": "scripts/task10_representative_sensitivity.py",
@@ -323,24 +328,29 @@
       "bytes": 4355
     },
     {
+      "path": "tests/test_input_validation.py",
+      "sha256": "c0126880782e2aaf771eca1b8d95a5d5da4e517aae442c7cc09f555acd6d9a33",
+      "bytes": 4516
+    },
+    {
       "path": "tests/test_projection_increment.py",
-      "sha256": "53a12cdf48ddea45283574311866d95499764d3267d20ed8624e264c247ef594",
-      "bytes": 3994
+      "sha256": "481fe9ebfdbcc817e8d39e87d8bdf06598ae2960e34b8950a4313751732fa6c1",
+      "bytes": 4097
     },
     {
       "path": "tests/test_reference_results.py",
-      "sha256": "edcff5de8c07ffa009e80b18df39cf5d4e25ca6ccab2af1cb857235b5843981b",
-      "bytes": 1146
+      "sha256": "faccf1639c8faf33a98d9665840b41c5b7280c56d70a50dc170097cf1c688a7a",
+      "bytes": 1296
     },
     {
       "path": "tests/test_release_package.py",
-      "sha256": "ec26f257107a6daf703a19667dd82676984df42225c91a41f95c181a9417a5c8",
-      "bytes": 1614
+      "sha256": "346ad7fd4f56c33de6f6158c3995564dd86974eb8e76c9361c3cd70f6ce50de9",
+      "bytes": 2413
     },
     {
       "path": "tests/test_representative_sensitivity.py",
-      "sha256": "61671cae72dd2b9c6ba9d83f26b9161712720c69fa5683aedbeacb5ab56d9426",
-      "bytes": 3324
+      "sha256": "90c8d29c1bb7ece32decd9bd5cee53383e2d22a5a81fdc4f8c4e9c3f07462696",
+      "bytes": 3579
     },
     {
       "path": "tests/test_submission_assets.py",

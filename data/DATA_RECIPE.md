@@ -8,7 +8,7 @@ Source: [FanGraphs MLB batting leaderboards](https://www.fangraphs.com/leaders/m
 
 1. Select MLB regular-season **batting**, all teams and players, seasons **2018–2026**, individual season rows, and **PA minimum 0**. Do not select qualified hitters or apply PA ≥100 during export: Marcel requires low-PA history.
 2. Export player-season totals across teams, not separate team stints. Include the combined batting fields in `input_schema.json`: identifiers, outcomes and all 22 constituent statistics. The recorded export has 465 columns and 12,934 rows. Use the supported CSV export; this package performs no scraping or downloads.
-3. Preserve missing values and fractional rate units (0.80 means 80%). Do not fill absent UBR or tracking fields with zeros. The source contains `Name.1`, `Team.1`, and `Season.1`; the importer checks these against the original columns. If your export schema differs, document that difference before adapting the importer. Do not remove other repeated-looking columns indiscriminately.
+3. Preserve missing values and fractional rate units (0.80 means 80%). Do not fill absent UBR or tracking fields with zeros. The source contains `Name.1`, `Team.1`, and `Season.1`; the importer checks these against the original columns when present; duplicate identifier columns may be absent. If your export schema differs, document that difference before adapting the importer. Do not remove other repeated-looking columns indiscriminately.
 4. Save as `data/raw/BattingStats_2018_2026.csv` relative to this repository's root. Keep it untracked.
 
 Frozen source SHA-256: `2130d2bc07ad64f3429c60a85628a1da9938b9dc4777ddc98277855bd1289e82`.
@@ -34,7 +34,7 @@ Install the pinned environment from the root README. The file inventory in `inpu
 ```bash
 python scripts/reproduce.py --stage inputs
 OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 python scripts/reproduce.py
-python -m pytest -q tests
+# Full runs automatically execute verification tests.
 ```
 
 The first command checks the batting file and the 12 required projections. The full run recomputes the primary analysis, clipped projection augmentation, unclipped sensitivity and direct paired scale comparisons. It never reads the author's old prediction files or another repository. Generated observations and outcomes stay in ignored `data/processed/`, `data/raw/generated/`, `results_sd10/`, and `results_zscore/`. Existing completed outputs are protected; use a fresh checkout for a clean rerun. No abstract, paper, figure or submission table is regenerated.
@@ -50,6 +50,6 @@ Both retain observed 2020 records in Marcel history lookbacks. Test transitions 
 
 ## 4. Historical snapshot differences
 
-The exact-reproduction entry point stops on a missing file or hash mismatch. Provider revisions, formatting and field changes can prevent recovery of the frozen snapshot. Hashes identify files; they cannot recover unavailable data. Do not edit newly obtained values to force a match. A new-vintage analysis requires a separately recorded input manifest, review of schema/cohort differences and new aggregate reference results; it is not exact reproduction of this snapshot.
+The default exact-reproduction entry point stops on a missing file or hash mismatch. `python scripts/reproduce.py --input-mode new` explicitly permits a different snapshot after schema validation, keeps its actual hashes in the run report, and reports rather than hides differences against the published aggregates. Use a fresh checkout for each run. Provider revisions, formatting and field changes can prevent recovery of the frozen snapshot. Hashes identify files; they cannot recover unavailable data. Do not edit newly obtained values to force a match. A new-vintage run records its input inventory in `results_sd10/run_inputs.json` and output comparisons in `results_sd10/reproduction_report.json`; review its schema/cohort and numerical differences. It does not overwrite the published aggregate references and is not exact reproduction of this snapshot.
 
 No redistribution permission is conferred by this recipe or the project's software license. See [DATA_RIGHTS.md](../DATA_RIGHTS.md). The organizers' conditional source-link/recipe response does not guarantee access to the exact historical inputs.
