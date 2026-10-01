@@ -4,7 +4,7 @@ Reproduce transparent five-tool profiles, primary forecast comparisons and incre
 
 This repository contains analysis code, protocols, acquisition metadata, aggregate reference results and tests. Current abstract/paper drafts and their figures/tables are excluded. No manuscript artifacts are required or regenerated.
 
-## End-to-end reproduction
+## Reproduction
 
 Tested with Python 3.14.6 and the pinned dependencies:
 
